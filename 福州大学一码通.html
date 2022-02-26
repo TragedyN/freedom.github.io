@@ -1,0 +1,903 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- saved from url=(0181)http://47.96.145.174:8080/campus/card/form.html?userName=ccf&deptName=%E7%89%A9%E7%90%86%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2&marqueeStr=%E6%96%87%E6%98%8E --><HTML 
+lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=11.0000" http-equiv="X-UA-Compatible">
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<TITLE>福州大学一码通 </TITLE>
+<META name="viewport" content="width=device-width, initial-scale=1.0"> <LINK 
+href="福州大学一码通_files/bootstrap.min.css" rel="stylesheet"> <LINK href="福州大学一码通_files/style4.css" 
+rel="stylesheet"> 
+<SCRIPT src="福州大学一码通_files/jquery-3.3.1.min.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/jquery.easyui.min.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/easyui-lang-zh_CN.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/chinesealert.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/common.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/Jquery.MaskLayer.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/jquery-powerFloat-min.js.下载" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="福州大学一码通_files/jquery.qrcode.min.js.下载" type="text/javascript"></SCRIPT>
+ 
+<STYLE type="text/css">
+     .obj{
+	outline:none;
+	line-height:29px;
+	padding:10px;
+	padding-bottom:0;
+	height:29px;
+
+    border-radius: 5px;
+ }
+@-moz-document url-prefix() {
+   .obj{
+	outline:none;
+	line-height:40px;
+	padding:10px;
+	height:40px;
+    width: 170px;
+ }
+}
+@media all and (-ms-high-contrast:none){
+  .obj{
+	outline:none;
+	line-height:29px;
+	padding:10px;
+	padding-bottom:0;
+	height:29px;
+    width: 150px;
+ }
+}
+ </STYLE>
+     
+<SCRIPT src="福州大学一码通_files/JsBarcode.all.min.js.下载" type="text/javascript"></SCRIPT>
+     <LINK href="福州大学一码通_files/my_loading.css" rel="stylesheet">     
+<SCRIPT src="福州大学一码通_files/jq_loading.js.下载" type="text/javascript"></SCRIPT>
+            
+<STYLE>
+
+        .jkmColor{
+
+        }
+
+
+    </STYLE>
+         <!--点击选择支付方式-->         
+<SCRIPT type="text/javascript">
+            var jkm ='#C0C0C0';
+            var acctype = "";//支付方式类型
+            var InterValObj; //timer变量，控制时间
+            var curCount = 60; //当前剩余秒数
+            var fullUrl = 'ws://ykt.fzu.edu.cn:2016';//监听地址
+            var myScroll;
+            //选择支付方式
+            $(function () {
+                var push1 = [];
+                $.each(jQuery(".payment-box").find("dl"), function (m, n) {
+                    var model = {};
+                    model.text = $(this).find('.title').html();
+                    model.src = $(this).find("img").attr("src");
+                    model.value = jQuery(n).attr("tag");
+                    model.desc = $(this).find('.dec').html();
+                    push1.push(model);
+                });
+                if (push1.length == 1) {
+                    document.getElementById("showUserPicker").innerHTML = "";
+                }
+                if (push1.length >= 1) {
+                    acctype = push1[0].value;
+                    // $('#payWay').html('<img src="' + push1[0].src + '"/><span>' + push1[0].text + acctype + '</span');
+                    $('#payWay').html('<img src="' +
+                        push1[0].src +
+                        '"/><div style="text-align: left; font-size:13px;"><div style="font-weight: 600;">' +
+                        push1[0].text +
+                        '</div><div>' +
+                        push1[0].desc +
+                        '</div></div>');
+
+                }
+                $('.payment-box').find('em').first().removeClass('icon-uncheckbox').addClass('icon-checkbox');
+                $('#changeWay').click(function () {
+                    $('#paymethodshow').show();
+                    $('.shadeBg').show();
+                });
+                $('.payment-box').find('dl').click(function () {
+                    acctype = $(this).attr('tag');
+                    $('.payment-box').children('dl').find('dd').children('em').removeClass('icon-checkbox').addClass('icon-uncheckbox');
+                    $(this).children('dd').find('em').removeClass('icon-uncheckbox').addClass('icon-checkbox');
+                    //$('#payWay').html('<img src="' + $(this).find("img").attr("src") + '"/><span>' + $(this).find('.title').html() + '</span>');
+                    $('#payWay').html('<img src="' +
+                        $(this).find("img").attr("src") +
+                        '"/><div style="text-align: left; font-size:13px;"><div style="font-weight: 600;">' +
+                        $(this).find('.title').html() +
+                        '</div><div>' +
+                        $(this).find('.dec').html() +
+                        '</div></div>');
+                    $('#paymethodshow').hide();
+                    $('.shadeBg').hide();
+                    getreqestbarcode();
+                });
+                $('.shadeBg').click(function () {
+                    $('#paymethodshow').hide();
+                    $('.shadeBg').hide();
+                });
+                $('#more').click(function () {
+                    $('#paymethodshow').show();
+                });
+                $("#qrCodeIco").css("margin", ($("#code").height() - $("#qrCodeIco").height()) / 2);//控制Logo图标的位置
+                //点击查看一维码
+                $('.tx').click(function () {
+                    $('#oneCode').show();
+                    $('#tips').show();
+                });
+                $('#oneCode').click(function () {
+                    $(this).hide();
+                });
+                //关闭提示
+                $('.btn_box').click(function () {
+                    $('#tips').toggle();
+                    return false;
+                });
+                //判断横屏和竖屏
+                var width = document.documentElement.clientWidth;
+                var height = document.documentElement.clientHeight;
+                if (width < height) {
+                    //console.log(width + " " + height);
+                    $print = $('#oneCode');
+                    $print.width(height);
+                    $print.height(width);
+                    $print.css('top', (height - width) / 2);
+                    $print.css('left', 0 - (height - width) / 2);
+                    $print.css('transform', 'rotate(90deg)');
+                    $print.css('transform-origin', '50% 50%');
+                }
+                //福大健康码防伪获取服务器时间
+                // GetDate(true);
+            });
+
+            $(function () {
+                createqrcode();
+                $('#codew').click(function () {
+                    getreqestbarcode();
+                });
+             
+
+            });
+            function createqrcode() {
+                curCount = 60;
+                window.clearInterval(InterValObj); //停止计时器
+                InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+                // var qrcode = $("#qrcode0").text();
+                var qrcode = "40571323437323084802";
+                msgSend(qrcode);
+                var qrkcode = "";
+                var j = 0;
+                for (var i = 1; i <= qrcode.length; i++) {
+                    if (i % 4 == 0) {
+                        qrkcode += qrcode.substr(j * 4, 4) + " ";
+                        j++;
+                    }
+                }
+                var options = {
+                    width: 2,//较细处条形码的宽度
+                    height: 70, //条形码的宽度，无高度直接设置项，由位数决定，可以通过CSS去调整，见下
+                    //quite: 10,
+                    format: "CODE128",
+                    displayValue: false,//是否在条形码下方显示文字
+                    margin: 2
+                };
+                //JsBarcode(barcode, str, options);//原生
+                // $('#barcode').JsBarcode(qrcode, options);//jQuery
+                if (qrcode != "" && qrcode.length == 20) {
+                    qrkcode = qrcode.substr(0, 4) + "************ 查看数字";//数字隐藏
+                }
+                JsBarcode("#barcode", qrcode, options);
+                JsBarcode("#barcode1", qrcode, options);
+                $("#dvtext").text(qrcode);
+                $("#dvtext1").text(qrkcode);
+                if (jkm=='') {
+                    jkm = "#000000";
+                }
+                jkm = "#000000";
+ 
+                var qrcodeobj = $("#code").empty().qrcode({
+                    render: "table", //table方式  canvas
+                    correctLevel: 0,//纠错等级    
+                    //top: 800,
+                    //background      : "#005992",//背景颜色    
+                    foreground: jkm, //前景颜色    
+                    text: "www.baidu.com"//任意内容 
+                });
+                
+                //判断健康码颜色改变提示语
+                if (jkm == "#000000") {
+                    $(".jkmColor").css("color", "#1d953f");
+                    $("#slogan").html("未见异常，允许通行，请主动出示，配合检测，并做好自我防护，出行前请确认。");
+                } else if (jkm == "#d20c12") {
+                    $(".jkmColor").css("color", jkm);
+                    $("#slogan").html("此码不可通行，码颜色将根据您的健康信息和通行权限动态更新。");
+                } else {
+                    $(".jkmColor").css("color", jkm);
+                }
+            }
+            //获取支付码
+            // function getreqestbarcode() {
+            //     //$.myloading({ title: '数据加载中' });
+            //     AsynPost(AjaxHandlerUrl + 'ThirdWeb/GetBarCode', { acctype: acctype }, function (result) {
+            //         if (result.IsSucceed) {
+            //             $.each(result.Obj, function (i, k) {
+            //                 $("#qrcode" + i).text(k);
+            //             });
+            //             createqrcode();
+            //             $.myloading("hide");
+            //         }
+            //         else {
+            //             $.messager.alert("提示", result.Msg, "warning", function () { });
+            //         }
+            //     });
+            //     $.myloading("hide");
+            // }
+            //timer处理函数
+            function SetRemainTime() {
+                if (curCount == 0) {
+                    // createqrcode();
+                    // getreqestbarcode();
+                }
+                else {
+                    curCount--;
+                }
+            }
+
+            function msgSend(temp) {
+                try {
+                    var ws = null;
+
+                    if ("WebSocket" in window) {
+                        ws = new WebSocket(fullUrl);
+
+                    } else if ("MozWebSocket" in window) {
+                        ws = new MozWebSocket(fullUrl);
+
+                    } else {
+                        return false;
+                    }
+
+                    if (ws != null) {
+                        ws.onopen = function () { };
+                        ws.onclose = function () { };
+                        ws.onerror = function (event) { };
+                        ws.onmessage = function (msg) {
+                            $("#txtvalue").val(msg.data);
+                            $("#form1").submit();
+                        };
+                        delayExcute(temp, ws);
+                    }
+                } catch (e) {
+                    //alert(e);
+                }
+
+            }
+
+            /*
+             *html发送二维码给服务端进行监听
+             */
+            function delayExcute(temp, ws) {
+                if (ws != null) {
+                    window.setTimeout(function () {
+                        ws.send("(" + temp + ")");
+                    }, 500);
+
+                }
+            }
+            // setInterval(function () {
+            //     GetDate(false);
+            // }, 1000);
+
+            // function GetDate(flag) {
+            //     AjaxGet(AjaxHandlerUrl + 'ThirdWeb/GetServerDate', null, function (result) {
+            //         $("#monthDay").html(result.monthDay);
+            //         $("#second").html(result.second);
+            //         $("#hourMinute").html(result.hourMinute);
+            //         if (flag) {
+            //             $("#marqueeStr").html(result.marqueeStr);
+            //         }
+            //     });
+            // }
+            //动态获取时间
+            window.setInterval(function (){
+	    		    var nowTime = getNowFormatDate();
+                    $("#monthDay").html(getMonthAndDay());
+                    $("#hourMinute").html(nowTime.split(" ")[1].substring(0,5));
+                    $("#second").html(nowTime.split(" ")[1].substring(6,8));
+                    // $("#marqueeStr").html('文明');
+	    		},1000);
+
+            function getNowFormatDate() {//获取当前时间
+                var date = new Date();
+                var seperator1 = "-";
+                var seperator2 = ":";
+                var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+                var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
+                var hour = date.getHours()<10?"0" + date.getHours():date.getHours();
+                var minute = date.getMinutes()<10?"0" + date.getMinutes():date.getMinutes();
+                var second = date.getSeconds()<10?"0" + date.getSeconds():date.getSeconds();
+                //var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
+                var currentdate = month  + seperator1  + strDate
+                        + " "  + hour  + seperator2  + minute  + seperator2 + second
+                        ;
+                return currentdate;
+            }
+            function getMonthAndDay() {//获取当前时间
+                var date = new Date();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                var currentdate = add0(month)  + "月" + add0(strDate) +"日";
+                return currentdate;
+            }
+
+            //修改月、天的格式，保持两位数显示
+            function add0(m){
+                return m<10?'0'+m:m
+            }
+
+            function getParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null)
+                    return decodeURI(r[2]);   //对参数进行decodeURI解码
+                return null;
+            }
+
+            $(function() {
+                var val1 = getParam("userName");
+                var val2 = getParam("deptName");
+				// 富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善
+				var lst = ['富强','民主','文明','和谐','自由','平等','公正','法治','爱国','敬业','诚信','友善']
+				var inputdata = window.prompt('富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善')
+                var val3 = (inputdata);
+                $("#userName").text("姓名：王明中" );
+                $("#deptName").text("部门：土木工程学院" );
+                $("#marqueeStr").html(val3);
+            });
+
+        </SCRIPT>
+     
+<STYLE>hcfy-result.__hcfy__result__both__{border: 1px dotted}</STYLE>
+
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY class="sweep_bg"><HEADER></HEADER>
+<DIV style="margin: 20px auto 0px; width: 86%; color: white; font-size: 20px; position: relative;"><IMG 
+style="top: -17px; width: 99px; right: 0px; float: right; position: absolute;" 
+src="福州大学一码通_files/FZU.png">         <SPAN id="userName" style="padding-bottom: 20px; display: block;">姓名：ccf</SPAN><SPAN 
+id="deptName" style="display: block;">部门：物理与信息工程学院</SPAN></DIV>
+<DIV class="pay-container">
+<DIV class="tx"><IMG id="barcode1" src="">	                                
+<DIV class="jkmColor" id="currentTime" style="margin: 10px; color: rgb(29, 149, 63); font-size: large;"><B 
+id="monthDay">10月03日</B>                       <B id="second" style="font-size: 35px;">45</B> 
+                      <B id="hourMinute">21:12</B>                   
+</DIV></DIV>
+<DIV id="codew">
+<DIV class="qr_code" id="code" style="width: 125px; height: 125px;">
+<TABLE style="border: 0px currentColor; border-image: none; border-collapse: collapse; background-color: rgb(255, 255, 255);">
+  <TBODY>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD></TR>
+  <TR>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(255, 255, 255);"></TD>
+    <TD style="background-color: rgb(0, 0, 0);"></TD>
+    <TD 
+style="background-color: rgb(255, 255, 255);"></TD></TR></TBODY></TABLE></DIV>
+<DIV>
+<MARQUEE class="jkmColor" id="marqueeStr" style="height: 35px; color: rgb(29, 149, 63); padding-top: 20px; font-size: 40px; display: block;">文明</MARQUEE></DIV>
+<DIV class="jkmColor" id="slogan" style="margin: 0px auto; width: 80%; text-align: left; color: rgb(29, 149, 63);">未见异常，允许通行，请主动出示，配合检测，并做好自我防护，出行前请确认。</DIV></DIV>
+<DIV class="bank_update" id="changeWay">
+<DIV class="bank" id="payWay" style="line-height: normal; margin-left: 30px; display: flex; justify-content: center; align-items: center;"><IMG 
+src="福州大学一码通_files/card1.jpg">
+<DIV style="text-align: left; font-size: 13px;">
+<DIV style="font-weight: 600;">一卡通</DIV>
+<DIV>适用所有场景</DIV></DIV></DIV><A id="showUserPicker" style="margin-right: 30px;" 
+type="button"></A>        	 </DIV></DIV>
+<DIV class="mui-content">
+<DIV class="mui-content-padded"></DIV></DIV>
+<DIV style="margin: 30px; text-align: center;"><A style="padding: 2px 6px; border-radius: 5px; border: 1px solid currentColor; border-image: none; color: white; font-size: large; font-weight: 700;" 
+href="http://ehall.fzu.edu.cn/qljfwapp/sys/lwReportEpidemic/*default/index.do#/">每日健康填报</A> 
+         </DIV><!--选择支付方式-->         
+<DIV class="popup" id="paymethodshow">
+<DIV class="caption-head border font-size-20 flex-box"><BUTTON class="btn01" 
+onclick="$('#paymethodshow').hide();$('.shadeBg').hide();"><EM class="icon-close font-size-24">×</EM> 
+                </BUTTON>             
+<DIV class="fit text-center">选择支付方式</DIV></DIV>
+<DIV class="profile-box">
+<DIV class="liushui-list payment-box">
+<DL tag="###">
+  <DT><IMG alt="" src="福州大学一码通_files/card1.jpg"></DT>
+  <DD class="f">
+  <DIV class="title">一卡通</DIV>
+  <DIV class="dec">适用所有场景</DIV></DD>
+  <DD><EM class="icon-checkbox"></EM></DD></DL></DIV></DIV></DIV>
+<DIV class="shadeBg"></DIV>
+<DIV style="width: 100%; text-align: center; bottom: 0.2rem; position: absolute;">
+<DIV id="ccTips" style="margin-bottom: 100px;">        暂不支持此服务     </DIV></DIV>
+<DIV id="oneCode" style="transform-origin: 50% 50%; left: -261.5px; top: 261.5px; width: 766px; height: 243px; transform: rotate(90deg);">
+<DIV class="one">
+<DIV id="dvtext">40571323437323084802</DIV>
+<DIV class="oneimg"><IMG id="barcode" src="福州大学一码通_files/dat48F3(1).tmp">        
+         </DIV></DIV>
+<DIV class="tipsbox" id="tips">
+<DIV class="tips-txt">付款码数字仅用于付钱时向商家出示 为防诈骗，请不要发送给他人                 </DIV>
+<DIV class="btn_box mar_bot04 part-top01"><BUTTON class="btn   font_20" type="button">我知道了</BUTTON> 
+                </DIV></DIV></DIV>
+<FORM id="form1" action="http://47.96.145.174:8080/ThirdWeb/OrderResult" method="POST"><INPUT name="txtvalue" id="txtvalue" type="hidden"> 
+            <INPUT id="appUrl" type="hidden">             <inout id="appFlag" 
+type="hidden" value=""><inout id="isshowheader" type="hidden" 
+value="0"></inout></inout></FORM><remove-web-limits-iqxin class="rwl-exempt" id="rwl-iqxin" 
+style="left: 0px; top: 0px; position: fixed;"><qxinbutton id="rwl-setbtn" type="qxinbutton"> 
+set </qxinbutton> <lalala style="font-size: 12px; cursor: move;">限制解除</lalala> 
+<INPUT id="black_node" type="checkbox">
+<STYLE type="text/css">#rwl-iqxin{position:fixed;transform:translate(-95px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin #rwl-setbtn{margin: 0 4px 0 0;padding: 0 0 0 4px;border: none;border-radius: 2px;cursor: pointer;background: #fff;color: #000;} </STYLE>
+</remove-web-limits-iqxin>
+<DIV style="all: initial;">
+<DIV id="__hcfy__" style="all: initial;"></DIV></DIV>
+<DIV style="all: initial;">
+<DIV style="all: initial;"></DIV></DIV></BODY></HTML>
