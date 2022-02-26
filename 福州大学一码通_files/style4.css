@@ -1,0 +1,642 @@
+#code table {
+	width: 100%; height: 100%;
+}
+.qr_code {
+	display: inline-block; background-size: 110%;
+}
+body {
+	background: rgb(248, 248, 248); text-align: left; color: rgb(85, 85, 85); font-family: "Î¢ÈíÑÅºÚ", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400;
+}
+ul {
+	list-style: none;
+}
+strong {
+	font-weight: 700;
+}
+.red {
+	color: rgb(235, 65, 65);
+}
+a:hover {
+	text-decoration: none;
+}
+.text_align {
+	text-align: center;
+}
+.header {
+	margin: 0px auto; height: 50px; line-height: 50px; font-size: 14px; box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.3); background-color: rgb(51, 51, 51); -webkit-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .3); -moz-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .3);
+}
+.tit_back {
+	background: url("../img/back.png") no-repeat 3px; padding-left: 10px; font-size: 16px;
+}
+.tit_back_1 {
+	padding: 0px 0px 0px 10px; left: 2px; position: absolute;
+}
+.tit_center {
+	width: 40%; text-align: center; font-size: 18px;
+}
+.tit_more {
+	width: 25%; text-align: right;
+}
+.tit_content {
+	width: 65%; text-align: center;
+}
+.tit_menu {
+	width: 10%; letter-spacing: 3px; font-size: 32px; float: right; display: inline-block;
+}
+.tit_menu_01 {
+	padding: 0px 7px; right: 0px; color: rgb(255, 255, 255); letter-spacing: -5px; font-size: 32px; float: right; display: inline-block; position: absolute;
+}
+.logo h1 {
+	line-height: 10px; font-family: "Î¢ÈíÑÅºÚ", cursive; font-size: 24px; font-weight: 300;
+}
+.logo h1 a {
+	color: rgb(255, 255, 255);
+}
+.back_index a {
+	color: rgb(255, 255, 255);
+}
+.my_Er.title_col {
+	color: rgb(255, 255, 255);
+}
+.pay_title a {
+	color: rgb(255, 255, 255);
+}
+.pay_title {
+	color: rgb(255, 255, 255);
+}
+.back_index {
+	width: 20%;
+}
+.pay_title {
+	float: left;
+}
+.pay_title_small {
+	height: 30px; text-align: center; color: rgb(255, 255, 255); line-height: 30px; font-size: 14px; display: block;
+}
+.my_Er {
+	color: rgb(255, 255, 255); padding-left: 30%;
+}
+.links {
+	text-align: right;
+}
+.links a {
+	margin: 15px 0px 0px 20px; width: 30px; height: 30px; display: inline-block;
+}
+.links a.home {
+	background: url("../img/home.png") no-repeat center;
+}
+.links a.blog {
+	background: url("../img/blog.png") no-repeat center; margin-right: 50px;
+}
+.register-container {
+	margin-top: 50px; margin-bottom: 30px;
+}
+.con_width {
+	width: 95%;
+}
+.iphone {
+	text-align: right;
+}
+.iphone img {
+	margin-right: 10px;
+}
+.row {
+	margin: 0px auto;
+}
+.register {
+	border-radius: 8px; text-align: center; -webkit-border-radius: 8px; -moz-border-radius: 8px;
+}
+.register .Qr_code {
+	border-radius: 8px; text-align: center; -webkit-border-radius: 8px; -moz-border-radius: 8px;
+}
+.register h2 {
+	text-align: center; padding-bottom: 15px; font-size: 24px; font-weight: 400; border-bottom-color: rgb(187, 187, 187); border-bottom-width: 2px; border-bottom-style: dotted;
+}
+.register input {
+	border-radius: 4px; border: 1px solid rgb(255, 255, 255); border-image: none; width: 85%; height: 40px; color: rgb(136, 136, 136); padding-left: 40px; font-family: "Î¢ÈíÑÅºÚ", Helvetica, Arial, sans-serif; font-size: 14px; box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.1); -webkit-border-radius: 4px; -moz-border-radius: 4px; -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1) inset; -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1) inset;
+}
+.register .userID {
+	background: url("../bootstrap/img/user.png") no-repeat 5px rgb(246, 246, 246);
+}
+.register .pasWord {
+	background: url("../bootstrap/img/psword.png") no-repeat 5px rgb(246, 246, 246);
+}
+.register input:focus {
+	border: 1px solid rgb(204, 204, 204); border-image: none; box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+}
+.register label {
+	margin: 0px 2px 0px 0px; height: 30px; text-align: left; line-height: 30px; padding-left: 30px; font-size: 14px;
+}
+.marg-bot {
+	margin: 30px 0px 10px; padding: 0px 8px;
+}
+.marg_left {
+	padding: 0px 8px;
+}
+.Qr_info {
+	margin: 20px auto 0px; width: 172px;
+}
+.Qr_info .positon_l {
+	float: left;
+}
+.register input:-ms-input-placeholder {
+	color: rgb(170, 170, 170);
+}
+.register button {
+	padding: 0px; border-radius: 3px; border: 0px currentColor; transition:0.2s; border-image: none; width: 85%; height: 42px; color: rgb(255, 255, 255); letter-spacing: 5px; font-family: "Î¢ÈíÑÅºÚ", Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 400; cursor: pointer; box-shadow: inset 0px 15px 30px 0px rgba(255,255,255,0.1); text-shadow: 0px 1px 2px rgba(0,0,0,0.1); -webkit-border-radius: 3px; -moz-border-radius: 3px; -webkit-box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .1) inset; -moz-box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .1) inset; -webkit-transition: all .2s; -moz-transition: all .2s; -o-transition: all .2s;
+}
+.register form button:hover {
+	box-shadow: inset 0px -15px 30px 0px rgba(255,255,255,0.05); -webkit-box-shadow: 0 -15px 30px 0 rgba(255, 255, 255, .05) inset; -moz-box-shadow: 0 -15px 30px 0 rgba(255, 255, 255, .05) inset;
+}
+.register form button:active {
+	box-shadow: inset 0px -15px 30px 0px rgba(255,255,255,0.05), inset 0px 5px 8px 0px rgba(0,0,0,0.1); -webkit-box-shadow: 0 -15px 30px 0 rgba(255, 255, 255, .05) inset, 0 5px 8px 0 rgba(0, 0, 0, .1) inset; -moz-box-shadow: 0 -15px 30px 0 rgba(255, 255, 255, .05) inset, 0 5px 8px 0 rgba(0, 0, 0, .1) inset;
+}
+@media all and (max-width:1200px)
+{
+.register form h2 {
+	background: url("../img/pencil.png") no-repeat 20px 6px;
+}
+}
+@media all and (max-width:979px) and (min-width:768px)
+{
+.register form h2 {
+	background: none;
+}
+}
+@media all and (max-width:768px)
+{
+body {
+	padding-right: 0px; padding-left: 0px;
+}
+.logo {
+	text-align: center;
+}
+.links {
+	text-align: center;
+}
+.links {
+	padding-bottom: 5px;
+}
+.logo h1 {
+	color: rgb(255, 255, 255); padding-left: 0px;
+}
+.links a.home {
+	margin-left: 0px;
+}
+.links a.blog {
+	margin-right: 0px;
+}
+.register-container {
+	padding-right: 20px; padding-left: 20px;
+}
+.register form h2 {
+	background: none;
+}
+.iphone img {
+	display: none;
+}
+.pay_margin {
+	margin-top: 0px; margin-bottom: 5px;
+}
+}
+@media all and (max-width:375px)
+{
+.positon_l {
+	width: 30%;
+}
+}
+@media all and (max-width:320px)
+{
+.positon_l {
+	width: 30%;
+}
+}
+.pay_margin {
+	margin-top: 5px; margin-bottom: 5px;
+}
+@media all and (max-height:480px)
+{
+.pay_margin {
+	margin-top: 5px; margin-bottom: 5px;
+}
+.pay_margin h3 {
+	height: 10px;
+}
+}
+@media all and (max-height:731px)
+{
+.pay_margin {
+	margin-top: 25px; margin-bottom: 5px;
+}
+}
+@media all and (max-height:800px)
+{
+.pay_margin {
+	margin-top: 35px; margin-bottom: 5px;
+}
+}
+@media all and (max-height:950px)
+{
+.pay_margin {
+	margin-top: 45px; margin-bottom: 5px;
+}
+}
+@media all and (max-height:480px)
+{
+.pay_margin {
+	margin-top: 5px; margin-bottom: 0px;
+}
+}
+.pay {
+	background: rgb(51, 51, 51);
+}
+.pay_form {
+	font-size: 14px;
+}
+.seller {
+	height: 30px; line-height: 30px;
+}
+.many_input {
+	border: currentColor; border-image: none; width: 90%;
+}
+.modal-title_01 {
+	text-align: center; font-weight: normal;
+}
+.pay_button {
+	margin: 0px auto; width: 100%; height: 40px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 20px; font-weight: 500;
+}
+.pay_button_01 {
+	width: 90%; font-family: "Î¢ÈíÑÅºÚ"; font-weight: 500;
+}
+.text-left {
+	height: 30px; text-align: left; line-height: 30px; display: block;
+}
+.text-right {
+	padding-right: 30px; float: right;
+}
+.text-right_01 {
+	float: right;
+}
+.text-center {
+	text-align: center;
+}
+.back_col {
+	margin: 0px auto; padding: 5px 0px; width: 90%; font-size: 14px;
+}
+.back_col_big {
+	font-size: 20px;
+}
+.succes_col {
+	color: green;
+}
+.wrong_col {
+	color: rgb(217, 83, 79);
+}
+.sure_many {
+	padding: 30px 20px; font-family: "Î¢ÈíÑÅºÚ"; font-size: 40px; font-weight: normal;
+}
+.sure_many_mar {
+	margin-top: 30px; margin-bottom: 30px;
+}
+.order_info {
+	width: 90%; height: 30px; text-align: left; display: inline-block;
+}
+.order_info_01 {
+	margin: 5px 0px; width: 95%; text-align: left; font-size: 14px; display: inline-block;
+}
+.txt_right {
+	text-align: right;
+}
+.txt_col {
+	color: rgb(154, 154, 154);
+}
+.sure_many_text {
+	height: 40px; line-height: 40px; font-size: 16px;
+}
+.order_info_border {
+	margin: 10px 0px 20px; border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.float_r {
+	float: right;
+}
+.float_l {
+	float: left;
+}
+.pay_way_sure {
+	margin: 0px auto; width: 85%; text-align: left; font-size: 12px; border-top-color: rgb(216, 216, 216); border-bottom-color: rgb(216, 216, 216); border-top-width: 1px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid;
+}
+.pay_way_sure a {
+	float: left; display: inline-block;
+}
+.pay_way_sure_01 {
+	width: 25%; color: rgb(153, 153, 153);
+}
+.pay_way_sure_02 {
+	width: 70%; font-size: 16px;
+}
+.back_col_pay {
+	padding: 15% 15% 32%; text-align: center; color: rgb(255, 255, 255); margin-bottom: 20px; background-color: rgb(40, 41, 54);
+}
+.font_col {
+	color: rgb(51, 51, 51);
+}
+.pay_way {
+	width: 45%;
+}
+.record {
+	margin: 0px; padding: 0px;
+}
+.record_date {
+	font-size: 14px; background-color: rgb(238, 238, 238);
+}
+.item_padding {
+	padding: 5px 10px;
+}
+.group-item-text {
+	font-size: 12px;
+}
+.pay_modify {
+	margin: 20px 0px 2px;
+}
+.pay_forget {
+	margin: 0px 0px 2px;
+}
+.modify_title {
+	text-align: center; margin-top: 5%; margin-bottom: 5%;
+}
+.set_state {
+	height: 35px; line-height: 35px; padding-left: 20px;
+}
+.account {
+	border: 1px solid red; border-image: none; padding-left: 20px;
+}
+.pay_index {
+	width: 100%; padding-left: 40%; font-size: 22px;
+}
+.userInfo {
+	text-align: left; padding-left: 10px; font-weight: normal;
+}
+.pay_index_01 {
+	width: 100%; text-align: center; font-size: 20px;
+}
+.sweep_bg {
+	background-color: rgb(10, 132, 189);
+}
+.pay-container {
+	margin: 30px auto 10px; border-radius: 8px; width: 86%; text-align: center; background-color: rgb(255, 255, 255);
+}
+.tx {
+	padding: 20px 0px;
+}
+.bank_update {
+	margin: 0px auto; height: 80px; line-height: 30px; display: flex; justify-content: space-between; align-items: center;
+}
+.bank {
+	float: left; display: flex; justify-content: center; align-items: center;
+}
+.btn_width {
+	width: 90%;
+}
+.align_footer {
+	text-align: center;
+}
+.pay {
+	height: 40px; line-height: 40px; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pay_instru {
+	color: rgb(187, 187, 187);
+}
+.pay {
+	background: rgb(51, 51, 51);
+}
+.instruct {
+	margin: 10px 0px 0px;
+}
+.txt_indent {
+	text-indent: 2em;
+}
+.scanning_bg {
+	margin: 0px auto; height: 100%; text-align: center;
+}
+.img_align {
+	text-align: center;
+}
+.search {
+	background: rgb(204, 204, 204); height: 35px; line-height: 40px;
+}
+.search_input {
+	width: 80%; float: left;
+}
+.drag-handle {
+	color: rgb(95, 158, 223); margin-right: 10px; float: right; display: inline-block; cursor: move;
+}
+.sorttable {
+	margin: 0px auto; padding-right: 20px; padding-left: 20px; font-size: 14px; background-color: white;
+}
+.js-sortable {
+	list-style: none;
+}
+.js-sortable li {
+	height: 30px; line-height: 30px; margin-bottom: 3px;
+}
+.record_01 {
+	width: 60%; height: 25px; color: rgb(51, 51, 51); line-height: 25px; font-size: 12px;
+}
+.record_title {
+	font-size: 14px; font-weight: 500;
+}
+.record_border {
+	padding: 5px 8px 10px; font-family: "Î¢ÈíÑÅºÚ"; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: dashed;
+}
+.popup {
+	padding: 0px; width: 100%; bottom: 0px; position: fixed; z-index: 4; background-color: rgb(255, 255, 255);
+}
+.popup {
+	bottom: 0px; display: none;
+}
+.caption-head.border {
+	border-bottom-color: rgb(235, 235, 235); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.flex-box {
+	display: flex;
+}
+.fit {
+	flex:1 1 0px; -webkit-box-flex: 1;
+}
+.text-center {
+	text-align: center;
+}
+:first-child.liushui-list {
+	margin-top: 0px;
+}
+.liushui-list {
+	margin: 0.2rem 0px 0px;
+}
+.profile-box dl {
+	margin: 0px; padding: 0.62rem 0px; width: 100%; border-bottom-color: rgb(242, 242, 242); border-bottom-width: 1px; border-bottom-style: solid; display: flex; align-items: center; background-color: rgb(255, 255, 255);
+}
+.profile-box dl dd {
+	margin: 0px; color: grey; padding-right: 1rem; font-size: 0.85rem;
+}
+.profile-box dl dt {
+	margin: 0px; color: rgb(85, 85, 85); padding-left: 1rem; font-size: 1rem;
+}
+.profile-box dl dd.f {
+	flex:1 1 0px; padding-left: 1rem; -webkit-box-flex: 1;
+}
+.profile-box .liushui-list dl:first-child {
+	border-radius: 0px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.caption-head {
+	padding: 0.87rem; position: relative;
+}
+.caption-head.border {
+	border-bottom-color: rgb(235, 235, 235); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.icon-uncheckbox {
+	border-radius: 1.75rem; border: 1px solid rgb(204, 204, 204); border-image: none; width: 1.25rem; height: 1.25rem;
+}
+.icon-uncheckbox .small {
+	width: 1rem; height: 1rem;
+}
+.icon-checkbox {
+	border-radius: 1.75rem; border: 1px solid rgb(61, 207, 41); border-image: none; width: 1.25rem; height: 1.25rem; position: relative; transform: rotate(45deg); background-color: rgb(61, 207, 41);
+}
+.icon-checkbox::before {
+	left: 5px; top: 13px; width: 8px; height: 2px;
+}
+.icon-checkbox::after {
+	left: 12px; top: 0px; width: 2px; height: 15px;
+}
+.icon-checkbox::after {
+	overflow: hidden; font-size: 0px; position: absolute; content: ""; background-color: rgb(255, 255, 255);
+}
+.icon-checkbox::before {
+	overflow: hidden; font-size: 0px; position: absolute; content: ""; background-color: rgb(255, 255, 255);
+}
+.checkbox::before {
+	left: 8px; top: 19px; width: 8px; height: 2px; overflow: hidden; font-size: 0px; position: absolute; content: ""; background-color: rgb(255, 255, 255);
+}
+.checkbox::after {
+	left: 15px; top: 6px; width: 2px; height: 15px; overflow: hidden; font-size: 0px; position: absolute; content: ""; background-color: rgb(255, 255, 255);
+}
+.checkbox.small {
+	width: 1rem; height: 1rem;
+}
+[class*=' icon-'] {
+	text-transform: none; font-family: synjones; font-size: inherit; font-style: normal; font-variant: normal; font-weight: 400; display: inline-block; speak: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+[class^=icon-] {
+	text-transform: none; font-family: synjones; font-size: inherit; font-style: normal; font-variant: normal; font-weight: 400; display: inline-block; speak: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+.btn01 {
+	background: rgb(255, 255, 255); outline: 0px; border: 0px currentColor; border-image: none;
+}
+.profile-box dl dt img {
+	width: 1.87rem; height: 1.87rem; overflow: hidden;
+}
+.title {
+	color: rgb(29, 29, 29); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;
+}
+.dec {
+	color: rgb(114, 114, 114);
+}
+.font-size-20 {
+	font-size: 1rem;
+}
+.font-size-24 {
+	font-size: 1.5rem;
+}
+#payWay img {
+	width: 1.25rem; height: 1.25rem; margin-right: 0.4rem;
+}
+.function_list {
+	padding: 0.3rem 0.2rem; left: 0rem; right: 0rem; bottom: 2.5rem; display: flex; position: fixed; justify-content: center; align-items: center;
+}
+.function {
+	width: 30%; text-align: center; display: inline-block;
+}
+.function_friend {
+	width: 50%; text-align: center; display: inline-block;
+}
+.function_01 {
+	display: block;
+}
+.function_02 {
+	display: block;
+}
+.new-icon-circle {
+	margin: auto auto 0.1rem; border-radius: 0.3rem; width: 2rem; height: 2rem; color: rgb(255, 255, 255); line-height: 0.8rem; font-size: 0.12rem; display: block;
+}
+.iconfont {
+	font-family: iconfont !important; font-style: normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: .2rem;
+}
+.aut_icon {
+	background: url("../img/fkm.png") no-repeat center / 90%;
+}
+.pay_icon {
+	background: url("../img/ccm.png") no-repeat center / 90%;
+}
+.yard_icon {
+	background: url("../img/sys.png") no-repeat center / 90%;
+}
+.cardVou_icon {
+	background: url("../img/cardVou_icon.png") no-repeat center / 90%;
+}
+.friend_icon {
+	background: url("../img/friend_icon.png") no-repeat center / 90%;
+}
+.addressbook_icon {
+	background: url("../img/address_book_icon.png") no-repeat center / 90%;
+}
+#oneCode {
+	background: rgba(255, 255, 255, 1); left: 0px; top: 0px; height: 100%; right: 0px; display: none; position: fixed; z-index: 10;
+}
+#ccTips {
+	background: rgba(255, 255, 255, 0.8); margin: auto; padding: 0.2rem; border-radius: 0.5rem; width: 6rem; height: 2rem; text-align: center; bottom: 0.2rem; line-height: 2rem; display: none;
+}
+.shadeBg {
+	background: rgba(0, 0, 0, 0.5); left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: fixed;
+}
+@media screen and (orientation:portrait)
+{
+.one {
+	margin: auto; width: 85%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.tipsbox {
+	background: rgba(255, 255, 255, 0.99); margin: auto; left: 0px; top: 0px; width: 100%; height: 100%; right: 0px; display: flex; position: fixed; z-index: 12; flex-direction: column; justify-content: center; align-items: center;
+}
+.tips-txt {
+	width: 15rem; text-align: center; color: rgb(29, 29, 29); font-size: 1rem; margin-top: 1rem;
+}
+.oneimg {
+	width: 22rem; height: 8rem; overflow: hidden;
+}
+.oneimg img {
+	width: 100%; height: auto;
+}
+#dvtext {
+	letter-spacing: 4px; font-size: 1.37rem; margin-bottom: 0.4rem;
+}
+.logo {
+	width: 6rem; height: 6rem; overflow: hidden;
+}
+#payWay {
+	height: 2rem; overflow: hidden; display: inline-block; -ms-text-overflow: ellipsis; -webkit-text-overflow: ellipsis;
+}
+.btn {
+	background: rgb(1, 85, 139); padding: 0px 2rem; border-radius: 0.3rem; border: currentColor; border-image: none; height: 2rem; color: rgb(255, 255, 255); line-height: 0.8rem; letter-spacing: 4px;
+}
+.btn_box {
+	width: 90%; text-align: center; margin-top: 2rem; margin-right: auto; margin-left: auto;
+}
+.bill-header {
+	padding: 17px 0px; width: 100%; position: relative; background-color: rgb(0, 89, 146);
+}
+.bill-header-arrow {
+	background: url("./images/back_icon.png") no-repeat left / 23px 23px; left: 11px; color: white; padding-left: 28px; display: block; position: absolute;
+}
+.bill-header-font {
+	text-align: center; color: rgb(255, 255, 255); font-size: 16px; display: block;
+}
+}
